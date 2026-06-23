@@ -30,6 +30,22 @@ import pandas as pd
 
 MODEL_PATH = Path(__file__).resolve().parents[1] / "model" / "model.joblib"
 
+"""Cretae log File"""
+LOG_PATH = Path(__file__).resolve().parents[1] / "logs" / "api.log"
+LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+logger.add(
+    LOG_PATH,
+    rotation="5 MB",
+    retention="7 days",
+    compression="zip",
+    encoding="utf-8",
+    enqueue=True,
+    format=(
+        "{time:YYYY-MM-DD HH:mm:ss.SSS} | "
+        "{level:<8} | "
+        "{message}"
+    ),
+)
 # Mémoire d'application — peuplée par le lifespan
 state: dict[str, Any] = {}
 
